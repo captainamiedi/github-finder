@@ -7,8 +7,17 @@ import Search from '../component/Search'
 import { GithubContext } from '../context/context'
 
 export default function Dashboard() {
-    const {githubUser} = React.useContext(GithubContext)
+    const {githubUser, isLoading} = React.useContext(GithubContext)
 
+  if (isLoading) {
+    return (
+      <main>
+        <Navbar />
+        <Search />
+        <img src="https://raw.githubusercontent.com/captainamiedi/react-search-github-users/main/src/images/preloader.gif" className='loading-img' alt="loading" />
+      </main>
+    )
+  }
   return (
     <main>
         <Navbar/>
@@ -18,6 +27,7 @@ export default function Dashboard() {
                 <Card key={index} data={item.data} />
             ))}
         </CardContainerWrapper>}
+        {githubUser?.length === 0 && <NotFoundContainer>No User Found</NotFoundContainer>}
         <Pagination />
     </main>
   )
@@ -32,4 +42,13 @@ padding: 0px 6rem;
     grid-template-columns: auto;
     padding: 0px 1rem;
 }
+`
+const NotFoundContainer = styled.h4`
+  display: flex;
+  justify-content: center;
+  font-weight: bolder;
+  padding-top: 5rem;
+  @media (max-width: 768px) {
+    padding-top: 2rem
+  }
 `
