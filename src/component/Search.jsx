@@ -20,6 +20,7 @@ export default function Search() {
               type="text"
               placeholder="Enter github username"
               value={users}
+              required
               onChange={(e) => setUsers(e.target.value)}
             />
             {<button type="submit">Search</button>}
